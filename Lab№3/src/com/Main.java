@@ -46,9 +46,11 @@ public class Main {
         System.out.println("Third string:");
         Text text2 = new Text(str2);
         text2.TextCalculations();
+        text2.Word();
         System.out.println();
         System.out.println("Fourth string:");
         Text text3 = new Text(str3);
         text3.TextCalculations();
+        text3.Word();
     }
 }

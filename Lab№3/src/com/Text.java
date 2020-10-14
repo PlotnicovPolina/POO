@@ -1,8 +1,8 @@
 package com;
+
 import java.lang.String;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Text {
     String str;
@@ -20,7 +20,8 @@ public class Text {
             } else if (s == '.' || s == '!' || s == '?' || s == ';'){
                 count12++;//number of punctuation marks
                 count2++;//number of sentences
-            } else if (s=='–' || s=='-' || s==',' || s==':' || s=='(' || s==')' || s=='\''){count12++;}
+            } else if (s=='–' || s=='-' || s==',' || s==':' || s=='(' || s==')' || s=='\''){count12++;
+            }
         }
         for(int i=0;i<str.length();i++){
             s = str.charAt(i);
@@ -66,16 +67,38 @@ public class Text {
         System.out.println("Number of punctuation marks:"+count12);
         System.out.println("number of other signs:"+(count9-count12-count1));//given that we don't calculate punctuation marks and space in second cycle
     }
+    public void Word(){
+        ArrayList<Struct> arrstr=new ArrayList<Struct>();
+        str=str.toLowerCase();
+        str=str.replace("\'","");
+        String[] parts = str.split("[\\W]+");
+        String jo="";
+        for (String temp: parts){
+            if (temp.length()>jo.length()) { jo=temp; }
+        }
+        System.out.println("\nThe longest word: "+jo);
 
-  /*  public void Word(String str){
-        String str2="";
-        char s,s2;
-        for (int i = 0; i < str.length(); i++){
-            s = str.charAt(i);
-            s2=str2.charAt(i);
-            if(s!='\''){s=s2;}}
-        System.out.println(str2);
-            Set<String> words = new HashSet<String>(Arrays.asList(str.split(" ")));
-    }*/
+        for(int i=0;i< parts.length;i++)
+        {
+            int count=1;
+            for(int j=parts.length-1;j>0;j--)
+            {
+                if(parts[i].equals(parts[j]) && i!=j) {
+                    count++;
+                }
+            }
+            Struct temp1=new Struct(parts[i],count);
+            if(!arrstr.contains(temp1)){ arrstr.add(temp1); }
+        }
+        Collections.sort(arrstr,Struct::compareTo);
 
+        int nsize=0;
+        if (arrstr.size()<5) { nsize=arrstr.size();} else nsize=5;
+
+        System.out.println("\nTop of the most often words in the text:");
+        for (int i=0;i<nsize;i++) {
+            System.out.println((i+1)+". "+arrstr.get(i).str+" "+arrstr.get(i).size);
+        }
+
+    }
 }
